@@ -23,10 +23,6 @@ public class Search {
         while(!structure.isEmpty())
         {
             Node temp = structure.pop();
-//            System.out.println("EXPANDING NODE AT: (" + temp.row + ", " + temp.column + ");");
-//            System.out.println("TRAVELED DISTANCE FROM START: " + temp.traveled);
-//            System.out.println("A-STAR HEURISTICS: " + temp.aStarHeuristic());
-
             numberOfExpandedNodes++;
 
             if(temp.column < width - 1)    //Can move right
@@ -88,12 +84,15 @@ public class Search {
         if(!plc.isVisited && !plc.isWall) {
             parent.put(plc, temp);
             plc.isVisited = true;
-            plc.traveled = temp.traveled + 1;
+            if (plc.traveled > temp.traveled + 1) {
+                plc.traveled = temp.traveled + 1;
+            }
             structure.push(plc);
         }
     }
 
     public static void main (String[] args) throws IOException {
+        runOnMaze("tinyMaze.txt");
         runOnMaze("mediumMaze.txt");
         runOnMaze("bigMaze.txt");
         runOnMaze("openMaze.txt");
